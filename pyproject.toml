@@ -1,0 +1,44 @@
+[project]
+name = "pokemon-scouting-data"
+version = "0.0.1"
+description = "A proxy to pokemon's api"
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+    "aiosqlite>=0.21.0",
+    "alembic>=1.15.1",
+    "anyio>=4.9.0",
+    "environs>=14.1.1",
+    "httptools>=0.6.4",
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "quart>=0.20.0",
+    "sqlalchemy>=2.0.39",
+    "typer>=0.15.2",
+    "uuid7>=0.1.0",
+    "uvicorn>=0.34.0",
+    "uvloop>=0.21.0",
+]
+
+[dependency-groups]
+dev = ["pyright>=1.1.397", "ruff>=0.11.0"]
+
+# -- Library configs -- #
+
+# Ruff Configs
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+extend-select = ["E501"]
+
+# Pyright configs
+[tool.pyright]
+exclude = [".venv/", "venv/", "*/__pycache__/"]
+pythonVersion = "3.13"
+pythonPlatform = "Linux"
+venvPath = "./.venv"
+typeCheckingMode = "strict"
+reportUnusedImport = false
