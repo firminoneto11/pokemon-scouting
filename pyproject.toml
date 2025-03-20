@@ -1,7 +1,7 @@
 [project]
-name = "pokemon-scouting-data"
+name = "pokemon-scouting"
 version = "0.0.1"
-description = "A proxy to pokemon's api"
+description = "A proxy to pokeapi"
 readme = "README.md"
 requires-python = ">=3.13"
 
