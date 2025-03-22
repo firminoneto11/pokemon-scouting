@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
 
 
-router = Router("stocks", __name__)
+router = Router("pokemons", __name__)
 
 
 @router.get("/pokemons")
