@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 @dataclass
 class State:
     db: "SqlDBPort"
+    connected: bool
 
 
 class ASGIFactory:
@@ -34,9 +35,9 @@ class ASGIFactory:
     def __init__(self):
         self.application = cast("ASGIApp", Quart(__name__))
         self.application.state = State(
-            db=SqlDBAdapter(connection_string=settings.DATABASE_URL)
+            db=SqlDBAdapter(connection_string=settings.DATABASE_URL),
+            connected=False,
         )
-        self.application.connected = False
 
         self.configure_lifespan()
         self.configure_logging()
@@ -44,14 +45,6 @@ class ASGIFactory:
         self.configure_exception_handlers()
         self.configure_state()
         self.configure_apps()
-
-    @property
-    def is_connected(self):
-        return self.application.connected
-
-    @is_connected.setter
-    def is_connected(self, new_value: bool):
-        self.application.connected = new_value
 
     def configure_lifespan(self):
         self.application.before_serving(
@@ -72,15 +65,15 @@ class ASGIFactory:
     def configure_apps(self): ...
 
     async def _on_startup(self, state: "StateProtocol"):
-        if not self.is_connected:
+        if not state.connected:
             await state.db.connect()
-            self.is_connected = True
+            state.connected = True
             logger.info("Connected to the database")
 
     async def _on_shutdown(self, state: "StateProtocol"):
-        if self.is_connected:
+        if state.connected:
             await state.db.disconnect()
-            self.is_connected = False
+            state.connected = False
             logger.info("Disconnected from the database")
 
 

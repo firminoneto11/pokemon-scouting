@@ -11,8 +11,8 @@ type EnvChoices = Literal["development", "testing", "staging", "production", "ci
 
 class StateProtocol(Protocol):
     db: "SqlDBPort"
+    connected: bool
 
 
 class ASGIApp(Quart):
     state: StateProtocol
-    connected: bool
