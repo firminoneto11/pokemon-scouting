@@ -1,4 +1,5 @@
-from typing import TYPE_CHECKING, Any
+import json as jsonlib
+from typing import TYPE_CHECKING, Any, cast
 
 from src.infra.http_client import HttpClient
 
@@ -22,4 +23,13 @@ class PokeAPIBackend(BaseAPIBackend):
 
         return self._transform(data=response.json())
 
-    def _transform(self, data: dict[str, Any]) -> "Data": ...
+    def _transform(self, data: dict[str, Any]):
+        transformed = {
+            "name": data["name"],
+            "base_experience": data["base_experience"],
+            "abilities": ",".join([el["ability"]["name"] for el in data["abilities"]]),
+            "weight": data["weight"],
+            "raw_json": jsonlib.dumps(data),
+        }
+
+        return cast("Data", transformed)

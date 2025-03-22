@@ -1,0 +1,36 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.2
+    hooks:
+      # Linting
+      - id: ruff
+        args: ["--fix"]
+
+      # Sorting
+      - id: ruff
+        args: ["--select", "I", "--fix"]
+
+      # Formatting
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: run-static-type-checking
+        name: pyright
+        entry: sh -c 'pyright'
+        language: system
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: trailing-whitespace
+        exclude: ^.github/
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.3
+    hooks:
+      - id: bandit
+        args: ["-c", "pyproject.toml", "-r", "."]
+        additional_dependencies: ["bandit[toml]"]

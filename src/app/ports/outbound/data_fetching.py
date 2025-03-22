@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any, TypedDict
+from typing import TypedDict
 
 
 class Data(TypedDict):
@@ -7,7 +7,7 @@ class Data(TypedDict):
     base_experience: int
     abilities: str
     weight: int
-    raw_json: dict[str, Any]
+    raw_json: str
 
 
 class DataFetcherPort(metaclass=ABCMeta):

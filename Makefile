@@ -7,3 +7,6 @@ deps:
 
 dev:
 	python3 manage.py runserver
+
+pc:
+	pre-commit run --config .pre-commit-config.yaml --all-files
