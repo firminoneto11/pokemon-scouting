@@ -1,0 +1,20 @@
+services:
+  pokemon-scouting-backend:
+    container_name: pokemon-scouting-backend
+    image: pokemon-scouting-backend:latest
+    pull_policy: build
+    build:
+      dockerfile: docker/staging/Dockerfile
+      context: ../../
+    ports:
+      - 8000:8000
+    env_file:
+      - staging.env
+    networks:
+      - pokemon-scouting-net
+    volumes:
+      - /tmp/pokemon-scouting-volume:/app
+
+networks:
+  pokemon-scouting-net:
+    driver: bridge

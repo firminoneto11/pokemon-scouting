@@ -1,0 +1,8 @@
+.venv/
+.git/
+.ruff_cache/
+.env
+.gitignore
+sample.env
+*.db
+*.json
