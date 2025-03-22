@@ -1,8 +1,17 @@
+import json as jsonlib
+from typing import Any
+
+
 class BaseException(Exception):
-    def __init__(self, detail: str, code: int = 400):
+    def __init__(self, detail: str | dict[str, Any], code: int = 400):
         self.code = code
-        self.detail = detail
-        super().__init__(detail)
+
+        if isinstance(detail, dict):
+            self.detail = jsonlib.dumps(detail)
+        else:
+            self.detail = detail
+
+        super().__init__(self.detail)
 
 
-class GenericException(BaseException): ...
+class ServiceException(BaseException): ...

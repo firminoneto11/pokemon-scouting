@@ -8,6 +8,9 @@ from quart import Quart
 from conf import settings
 from src.infra.database import SqlDBAdapter
 
+from .handlers import get_exception_handlers
+from .routers import get_routers
+
 if TYPE_CHECKING:
     from shared.types import ASGIApp, StateProtocol
     from src.app.ports.outbound.database import SqlDBPort
@@ -34,17 +37,21 @@ class ASGIFactory:
 
     def __init__(self):
         self.application = cast("ASGIApp", Quart(__name__))
+
+        self.configure_logging()
+        self.configure_state()
+        self.configure_lifespan()
+        self.configure_middleware()
+        self.configure_exception_handlers()
+        self.configure_routers()
+
+    def configure_logging(self): ...
+
+    def configure_state(self):
         self.application.state = State(
             db=SqlDBAdapter(connection_string=settings.DATABASE_URL),
             connected=False,
         )
-
-        self.configure_lifespan()
-        self.configure_logging()
-        self.configure_middleware()
-        self.configure_exception_handlers()
-        self.configure_state()
-        self.configure_apps()
 
     def configure_lifespan(self):
         self.application.before_serving(
@@ -54,15 +61,15 @@ class ASGIFactory:
             partial(self._on_shutdown, self.application.state)
         )
 
-    def configure_logging(self): ...
-
     def configure_middleware(self): ...
 
-    def configure_exception_handlers(self): ...
+    def configure_exception_handlers(self):
+        for error, handler in get_exception_handlers().items():
+            self.application.errorhandler(error)(handler)
 
-    def configure_state(self): ...
-
-    def configure_apps(self): ...
+    def configure_routers(self):
+        for router in get_routers():
+            self.application.register_blueprint(router)
 
     async def _on_startup(self, state: "StateProtocol"):
         if not state.connected:

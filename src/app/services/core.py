@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..exceptions import GenericException
+from ..exceptions import ServiceException
 from ..ports.outbound.data_fetching import DataFetcherPort
 from ..ports.outbound.repos import PokemonRepoPort
 
@@ -14,7 +14,7 @@ class CoreService:
         name_ = name.strip().lower()
         if (pokemon := await self.pokemon_repo.get_by_name(name=name_)) is None:
             if (data := await self.data_fetcher.get_info_for(name=name_)) is None:
-                raise GenericException(detail="Pokemon not found", code=404)
+                raise ServiceException(detail="Pokemon not found", code=404)
 
             pokemon = await self.pokemon_repo.create(data=data)
 
