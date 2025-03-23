@@ -42,7 +42,7 @@ Its also worth mentioning that in order to run the next commands as-is, you need
 sure that you are in a unix-like OS, because the docker-compose file uses the `/tmp/`
 directory to store the local sqlite database as a docker volume. In case that you aren't
 in a unix-like OS, you can edit [this file](./docker/staging/docker-compose.yaml) on the
-`volumes` section and change the path to one of you choosing.
+`volumes` section and change the path to one of your choosing.
 
 ### Running the server
 
