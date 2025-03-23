@@ -14,6 +14,7 @@ dependencies = [
     "httpx>=0.28.1",
     "loguru>=0.7.3",
     "quart>=0.20.0",
+    "quart-cors>=0.8.0",
     "sqlalchemy>=2.0.39",
     "typer>=0.15.2",
     "uuid7>=0.1.0",

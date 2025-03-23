@@ -9,6 +9,7 @@ from conf import settings
 from src.infra.database import SqlDBAdapter
 
 from .handlers import get_exception_handlers
+from .middleware import setup_cors
 from .routers import get_routers
 
 if TYPE_CHECKING:
@@ -61,14 +62,15 @@ class ASGIFactory:
             partial(self._on_shutdown, self.application.state)
         )
 
-    def configure_middleware(self): ...
+    def configure_middleware(self):
+        self.application = setup_cors(self.application)
 
     def configure_exception_handlers(self):
         for error, handler in get_exception_handlers().items():
             self.application.errorhandler(error)(handler)
 
     def configure_routers(self):
-        for router in get_routers():
+        for router in get_routers(setup_cors=setup_cors):
             self.application.register_blueprint(router)
 
     async def _on_startup(self, state: "StateProtocol"):
