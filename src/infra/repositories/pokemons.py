@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from sqlalchemy import func, select
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
     from src.app.ports.outbound.data_fetching import Data
 
 
+@dataclass
 class PokemonRepo(PokemonRepoPort):
     session: AsyncSession
 
@@ -19,5 +21,6 @@ class PokemonRepo(PokemonRepoPort):
 
     async def create(self, data: "Data"):
         instance = Pokemon(**data)
-        await self.session.flush(objects=[instance])
+        self.session.add(instance=instance)
+        await self.session.flush()
         return instance

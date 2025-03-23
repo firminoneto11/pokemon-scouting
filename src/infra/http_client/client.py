@@ -2,7 +2,7 @@ import json as jsonlib
 from dataclasses import dataclass
 from typing import Any, Awaitable, Callable, Literal, Optional, cast
 
-from httpx import Client, Response
+from httpx import AsyncClient, Response
 
 from shared.utils import retry_decorator
 
@@ -113,7 +113,7 @@ class HttpClient:
         if query_params:
             kwargs["params"] = query_params
 
-        with Client(**client_kwargs) as client:
+        async with AsyncClient(**client_kwargs) as client:
             call = cast(
                 Callable[..., Awaitable[Response]],
                 getattr(client, method.strip().lower()),

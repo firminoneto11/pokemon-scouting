@@ -13,7 +13,7 @@ services:
     networks:
       - pokemon-scouting-net
     volumes:
-      - /tmp/pokemon-scouting-volume:/app/db-volume
+      - /tmp/pokemon-scouting-volume:/app/volumes
 
 networks:
   pokemon-scouting-net:
