@@ -8,7 +8,7 @@ of information and caches the responses on a local database for future reference
 
 ## Endpoint
 
-The application consists on only one simple endpoint. Here's the details
+The application consists on only one simple endpoint. Here's the details:
 
 - **GET /api/v1/pokemons?name={pokemonName}**
 
@@ -37,6 +37,12 @@ the project locally or deploy it into the cloud.
 
 Also, if you have the `make` command available (via build-essential) in your system's
 PATH it would be of great help to avoid typing down long commands, but it's optional.
+
+Its also worth mentioning that in order to run the next commands as-is, you need to make
+sure that you are in a unix-like OS, because the docker-compose file uses the `/tmp/`
+directory to store the local sqlite database as a docker volume. In case that you aren't
+in a unix-like OS, you can edit [this file](./docker/staging/docker-compose.yaml) on the
+`volumes` section and change the path to one of you choosing.
 
 ### Running the server
 
@@ -73,5 +79,5 @@ occupying your machine's disk space.
 
 ## Video Link
 
-Bellow you can find the google driver folder to the code explanation as well
+Bellow you can find the google driver folder to the code explanation as well as
 instructions on how to run the project:
