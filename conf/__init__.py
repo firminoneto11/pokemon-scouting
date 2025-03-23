@@ -1,3 +1,3 @@
-from ._conf import Conf
+from ._conf import Conf as _Conf
 
-settings = Conf()
+settings = _Conf()
