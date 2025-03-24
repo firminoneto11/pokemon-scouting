@@ -9,6 +9,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Misc
 *.db
 *.json
 .env
+.coverage/*
+.pytest_cache/

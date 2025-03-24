@@ -2,7 +2,7 @@ import json as jsonlib
 from typing import Any
 
 
-class BaseException(Exception):
+class BaseExc(Exception):
     def __init__(self, detail: str | dict[str, Any], code: int = 400):
         self.code = code
 
@@ -14,4 +14,4 @@ class BaseException(Exception):
         super().__init__(self.detail)
 
 
-class ServiceException(BaseException): ...
+class ServiceException(BaseExc): ...

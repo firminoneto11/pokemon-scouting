@@ -23,7 +23,18 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["bandit>=1.8.3", "pre-commit>=4.2.0", "pyright>=1.1.397", "ruff>=0.11.0"]
+dev = [
+    "bandit>=1.8.3",
+    "coverage>=7.7.1",
+    "faker>=37.1.0",
+    "pre-commit>=4.2.0",
+    "pyright>=1.1.397",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.25.3",
+    "pytest-env>=1.1.5",
+    "pytest-sugar>=1.0.0",
+    "ruff>=0.11.0",
+]
 
 # -- Library configs -- #
 
@@ -48,3 +59,41 @@ reportUnusedImport = false
 # Bandit configs
 [tool.bandit]
 exclude_dirs = ["tests", ".venv"]
+
+# Pytest configs
+[tool.pytest.ini_options]
+addopts = "-s -v --durations=5"
+markers = []
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+
+# Pytest-Env configs
+[tool.pytest_env]
+POKEMON_SCOUTING_ENVIRONMENT = "testing"
+POKEMON_SCOUTING_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
+POKEMON_SCOUTING_DEBUG = true
+
+# Coverage configs
+[tool.coverage.run]
+branch = false
+data_file = ".coverage/coverage"
+omit = [
+    "test/*",
+    "tests/*",
+    "venv/*",
+    ".venv/*",
+    "*migrations/*",
+    "*cli/*",
+    "*conftest.py",
+    "manage.py",
+]
+
+[tool.coverage.report]
+skip_covered = true
+precision = 2
+# fail_under = 70
+exclude_also = ["if TYPE_CHECKING:", "@abstractmethod"]
+
+[tool.coverage.html]
+directory = ".coverage/html-report"
+skip_covered = true
