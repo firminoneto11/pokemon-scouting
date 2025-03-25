@@ -91,7 +91,7 @@ omit = [
 [tool.coverage.report]
 skip_covered = true
 precision = 2
-# fail_under = 70
+fail_under = 70
 exclude_also = ["if TYPE_CHECKING:", "@abstractmethod"]
 
 [tool.coverage.html]
