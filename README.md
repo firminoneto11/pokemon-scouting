@@ -77,6 +77,31 @@ $ make down
 In addition, `make down` will also remove the images that were just built to avoid
 occupying your machine's disk space.
 
+### Running tests
+
+This project leverages pytest and docker to run the test suite, should it be locally or
+into the cloud.
+
+To run the test suite locally, you can run the following docker commands:
+
+```bash
+# Builds the test image
+$ docker build -t pokemon-scouting-testing --file docker/testing/Dockerfile .
+
+# Runs the container with the test suite and removes it afterwards
+$ docker run --rm pokemon-scouting-testing
+
+# Removes the newly built testing image
+$ docker rmi pokemon-scouting-testing
+```
+
+Or, as mentioned before, if you have the `make` cli command available (via build-essential)
+you can simply:
+
+```bash
+$ make test
+```
+
 ## Video Link
 
 Bellow you can find the google driver folder to the code explanation as well as
